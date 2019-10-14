@@ -1,0 +1,10 @@
+Build docker image
+docker build -t vgandrarao/myapp0730:1.0 .
+
+start container with volumes
+docker run -d --name myapp-fe -p 9000:80 -v myapp-fe-var-log1:/var/log -v /home/ec2_user:/home/ec2_user vgandrarao/myapp0730:1.0
+7e6e64f8c74f855eca2013ec1dc8adb284e20680381055e3c5c36ecf70374e9b
+
+going into container
+
+docker exec -it 7e6e64f8c74f /bin/bash
