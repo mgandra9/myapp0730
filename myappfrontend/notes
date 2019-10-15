@@ -8,3 +8,11 @@ docker run -d --name myapp-fe -p 9000:80 -v myapp-fe-var-log1:/var/log -v /home/
 going into container
 
 docker exec -it 7e6e64f8c74f /bin/bash
+ctrl+D to comeout
+build image for log gagent
+docker build -t vgandrarao/myappfelogs myapp0730/myappfrontendlogs/
+
+create cloudwatchfullaccess role and asssign to cloud9 EC2 instance
+disable aws credential in cloud9 -- settings-aws settings-aws managed temperory credentials
+ec2-user:~/environment $ rm -rf ~/.aws
+docker run -d --name myapp-fe-logs  -v myapp-fe-var-log1:/mnt/log  vgandrarao/myappfelogs
