@@ -60,3 +60,4 @@ sudo mv ./kubectl /usr/local/bin/kubectl
 
 some commands
 kubectl get pods
+kubectl service service servcename
