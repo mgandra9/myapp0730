@@ -1,0 +1,62 @@
+
+1)install kops
+curl -LO https://github.com/kubernetes/kops/releases/download/$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '"' -f 4)/kops-linux-amd64
+chmod +x kops-linux-amd64
+sudo mv kops-linux-amd64 /usr/local/bin/kops
+
+2) Install kubectl
+wget -O kubectl https://storage.googleapis.com/kubernetes-release/release/v1.8.1/bin/linux/amd64/kubectl
+chmod +x ./kubectl
+sudo mv ./kubectl /usr/local/bin/kubectl
+
+3) Install AWS CLI
+   comes with amazaon linux
+   
+4) Create IAM role and add 5 polices and attach to cloud 9 instance or your build serevr
+   AmazonEC2FullAccess
+   AmazonRoute53FullAccess
+   AmazonS3FullAccess
+   IAMFullAccess
+   AmazonVPCFullAccess
+
+5) create s3 bucket 
+    kops-config-bucket-mgandra
+
+6) create Route53 hosted zone
+    vihaanrao.com
+    
+7) export environment variables
+
+   echo "export NAME=kubecluster.vihaanrao.com" >> ~/.bash_profile                                  -- domain name--clustername
+   echo "export KOPS_STATE_STORE=s3://kops-config-bucket-mgandra" >> ~/.bash_profile
+
+8) Generate SSH key
+   ssh-keygen
+   
+9) AWS tempeorary credentials are disabled.
+
+10) Attached newly created IAM role ec2full access
+
+11) rm -rf ~/.aws
+
+12) create cluster
+  kops create cluster \
+    --zones=us-east-1a,us-east-1b,us-east-1c \
+    --master-zones=us-east-1a,us-east-1b,us-east-1c \
+    --node-count=4 \
+    --node-size=t2.small \
+    --master-size=t2.small \
+    --authorization RBAC \
+    --name ${NAME} --yes
+    
+13) Incase of issues delete the cluster and recreate the cluster
+   kops delete cluster $NAME --yes
+   
+14) kops validate cluster
+
+15) kubectl apply -f myapp0730/deploy/frontend/deploy.yaml  --validate=false
+
+16) kubectl describe service testfrontend
+
+some commands
+kubectl get pods
