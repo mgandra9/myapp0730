@@ -61,3 +61,7 @@ sudo mv ./kubectl /usr/local/bin/kubectl
 some commands
 kubectl get pods
 kubectl service service servcename
+
+
+run kops.sh script
+ sh -x kops.sh vihaan-kube-test30 vihaanrao.com
